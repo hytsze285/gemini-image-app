@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 智能平台 - Gemini Pro/Ultra</title>
+    <title>AI 图片生成平台</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -25,7 +25,7 @@
         }
 
         .logo { color: white; font-size: 20px; font-weight: 700; }
-        .logo span { color: #f5576c; }
+        .logo em { color: #f5576c; font-style: normal; }
 
         .user-info {
             display: flex;
@@ -35,7 +35,7 @@
             font-size: 14px;
         }
 
-        .user-info .badge {
+        .badge {
             background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
             padding: 4px 10px;
@@ -67,14 +67,14 @@
             font-size: 14px;
             font-weight: 600;
             transition: all 0.3s;
+            border: none;
+            background: none;
         }
 
         .tab.active {
             background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
         }
-
-        .tab:hover:not(.active) { background: rgba(255,255,255,0.05); }
 
         .page { display: none; }
         .page.active { display: block; }
@@ -108,19 +108,18 @@
         .plan-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
         .plan-card.selected { border-color: #f5576c; }
 
-        .plan-card .tag {
+        .plan-tag {
             position: absolute;
             top: 0;
             right: 0;
-            background: linear-gradient(135deg, #f093fb, #f5576c);
+            background: linear-gradient(135deg, #ff9a56, #ff6a00);
             color: white;
             font-size: 11px;
             padding: 3px 10px;
             border-radius: 0 10px 0 10px;
         }
 
-        .plan-card .tag.hot { background: linear-gradient(135deg, #ff9a56, #ff6a00); }
-        .plan-card .tag.recommend { background: linear-gradient(135deg, #43e97b, #38f9d7); color: #333; }
+        .plan-tag.recommend { background: linear-gradient(135deg, #43e97b, #38f9d7); color: #333; }
 
         .plan-name { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 6px; }
         .plan-desc { font-size: 12px; color: #888; margin-bottom: 8px; }
@@ -154,7 +153,11 @@
             font-family: inherit;
         }
 
-        input:focus, textarea:focus, select:focus { outline: none; border-color: #f5576c; }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
         textarea { resize: vertical; min-height: 80px; }
 
         .btn-primary {
@@ -167,11 +170,10 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
         }
 
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .btn-secondary {
             width: 100%;
@@ -184,8 +186,6 @@
             cursor: pointer;
             margin-top: 10px;
         }
-
-        .btn-secondary:hover { background: #e0e0e0; }
 
         .status-bar {
             background: rgba(255,255,255,0.1);
@@ -208,6 +208,7 @@
             border-radius: 10px;
             margin-top: 16px;
             font-size: 14px;
+            display: none;
         }
 
         .text-result {
@@ -217,10 +218,20 @@
             margin-top: 16px;
             font-size: 14px;
             line-height: 1.6;
+            display: none;
         }
 
-        .image-box { margin-top: 16px; text-align: center; }
-        .image-box img { max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .image-box {
+            margin-top: 16px;
+            text-align: center;
+            display: none;
+        }
+
+        .image-box img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
 
         .download-btn {
             display: inline-block;
@@ -233,17 +244,17 @@
             font-size: 14px;
         }
 
-        .hidden { display: none; }
-
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.6);
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
+
+        .modal-overlay.show { display: flex; }
 
         .modal {
             background: white;
@@ -255,11 +266,26 @@
             position: relative;
         }
 
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #999;
+            padding: 4px 8px;
+        }
+
+        .modal-close:hover { color: #333; }
+
         .modal h3 { margin-bottom: 16px; font-size: 18px; }
         .modal p { color: #666; font-size: 14px; margin-bottom: 8px; }
-        .modal .price-big { font-size: 36px; color: #f5576c; font-weight: 700; margin: 16px 0; }
 
-        .modal .token-display {
+        .price-big { font-size: 36px; color: #f5576c; font-weight: 700; margin: 16px 0; }
+
+        .token-display {
             background: #f5f5f5;
             padding: 14px;
             border-radius: 8px;
@@ -281,26 +307,6 @@
             color: #333;
         }
 
-        .close-x {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            width: 32px;
-            height: 32px;
-            background: #f0f0f0;
-            border: none;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-            color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-
-        .close-x:hover { background: #ddd; color: #333; }
-
         .history-item {
             background: #f8f9fa;
             border-radius: 10px;
@@ -311,11 +317,566 @@
             align-items: center;
         }
 
-        .history-item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
-        .history-item .info { flex: 1; }
-        .history-item .info .prompt-text { font-size: 13px; color: #333; }
-        .history-item .info .time { font-size: 11px; color: #aaa; margin-top: 4px; }
+        .history-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .history-info { flex: 1; }
+        .history-info .prompt-text { font-size: 13px; color: #333; }
+        .history-info .time { font-size: 11px; color: #aaa; margin-top: 4px; }
 
         @media (max-width: 500px) {
             .plans-grid { grid-template-columns: 1fr; }
-            .status-bar { flex-wrap: wrap; gap
+            .status-bar { flex-wrap: wrap; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">NanoBanana <em>AI</em></div>
+        <div class="user-info">
+            <span id="userPlan" class="badge">未登录</span>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="tabs">
+            <div class="tab active" id="tab-plans">套餐选择</div>
+            <div class="tab" id="tab-generate">图片生成</div>
+            <div class="tab" id="tab-history">��史记录</div>
+        </div>
+
+        <!-- 套餐页面 -->
+        <div id="page-plans" class="page active">
+
+            <div class="section-title">Gemini Pro 套餐</div>
+            <div class="plans-grid">
+                <div class="plan-card" data-plan="pro_3h" data-name="3小时40次 Pro 体验" data-price="2.88" data-count="40" data-days="0.125">
+                    <span class="plan-tag">体验</span>
+                    <div class="plan-name">3小时40次 1天体验pro</div>
+                    <div class="plan-desc">国内版 适合尝鲜</div>
+                    <div class="plan-price">2.88 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="pro_15d" data-name="15天无限次 Pro" data-price="15" data-count="9999" data-days="15">
+                    <div class="plan-name">无限次调用 15天pro</div>
+                    <div class="plan-desc">国内版 无限次调用</div>
+                    <div class="plan-price">15 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="pro_30d" data-name="30天无限次 Pro" data-price="25" data-count="9999" data-days="30">
+                    <span class="plan-tag recommend">热销</span>
+                    <div class="plan-name">无限次调用 30天pro</div>
+                    <div class="plan-desc">国内版 性价比最高</div>
+                    <div class="plan-price">25 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="pro_90d" data-name="90天无限次 Pro" data-price="60" data-count="9999" data-days="90">
+                    <div class="plan-name">无限次调用 90天pro</div>
+                    <div class="plan-desc">国内版 季度畅享</div>
+                    <div class="plan-price">60 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="pro_365d" data-name="365天无限次 Pro" data-price="180" data-count="9999" data-days="365">
+                    <span class="plan-tag recommend">推荐</span>
+                    <div class="plan-name">无限次调用 365天pro</div>
+                    <div class="plan-desc">国内版 年度最划算</div>
+                    <div class="plan-price">180 元</div>
+                </div>
+            </div>
+
+            <div class="section-title">Gemini Ultra 套餐</div>
+            <div class="plans-grid">
+                <div class="plan-card" data-plan="ultra_1d" data-name="1天无限次 Ultra 体验" data-price="8.8" data-count="9999" data-days="1">
+                    <span class="plan-tag">体验</span>
+                    <div class="plan-name">无限次调用 1天体验Ultra</div>
+                    <div class="plan-desc">国内版 顶级模型</div>
+                    <div class="plan-price">8.8 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="ultra_15d" data-name="15天无限次 Ultra" data-price="50" data-count="9999" data-days="15">
+                    <div class="plan-name">无限次调用 15天Ultra</div>
+                    <div class="plan-desc">国内版 高级体验</div>
+                    <div class="plan-price">50 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="ultra_30d" data-name="30天无限次 Ultra" data-price="90" data-count="9999" data-days="30">
+                    <span class="plan-tag recommend">热销</span>
+                    <div class="plan-name">无限次调用 30天Ultra</div>
+                    <div class="plan-desc">国内版 顶级畅享</div>
+                    <div class="plan-price">90 元</div>
+                </div>
+            </div>
+
+            <div class="section-title">Nanobanana 图片生成</div>
+            <div class="plans-grid">
+                <div class="plan-card" data-plan="img_10" data-name="1天10张图片" data-price="3.8" data-count="10" data-days="1">
+                    <span class="plan-tag">体验</span>
+                    <div class="plan-name">1天体验版 10张图</div>
+                    <div class="plan-desc">国内直登 Gemini 3.0</div>
+                    <div class="plan-price">3.8 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="img_100" data-name="7天100张图片" data-price="25" data-count="100" data-days="7">
+                    <div class="plan-name">7天使用 100张图</div>
+                    <div class="plan-desc">国内直登 支持2K高清</div>
+                    <div class="plan-price">25 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="img_500" data-name="30天500张图片" data-price="100" data-count="500" data-days="30">
+                    <span class="plan-tag recommend">热销</span>
+                    <div class="plan-name">30天使用 500张图</div>
+                    <div class="plan-desc">国内直登 支持4K超清</div>
+                    <div class="plan-price">100 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="img_1000" data-name="30天1000张图片" data-price="195" data-count="1000" data-days="30">
+                    <div class="plan-name">30天使用 1000张图</div>
+                    <div class="plan-desc">国内直登 商业级</div>
+                    <div class="plan-price">195 元</div>
+                </div>
+
+                <div class="plan-card" data-plan="img_2000" data-name="30天2000张图片" data-price="385" data-count="2000" data-days="30">
+                    <span class="plan-tag recommend">旗舰</span>
+                    <div class="plan-name">30天使用 2000张图</div>
+                    <div class="plan-desc">国内直登 企业级</div>
+                    <div class="plan-price">385 元</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 图片生成页面 -->
+        <div id="page-generate" class="page">
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="num" id="remainCount">--</div>
+                    <div class="label">剩余次数</div>
+                </div>
+                <div class="status-item">
+                    <div class="num" id="usedCount">0</div>
+                    <div class="label">已使用</div>
+                </div>
+                <div class="status-item">
+                    <div class="num" id="expireDate">--</div>
+                    <div class="label">到期时间</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>账号登录</h3>
+                <label>访问令牌</label>
+                <input type="password" id="token" placeholder="请输入您的访问令牌" />
+                <button class="btn-secondary" id="checkBtn">查询剩余额度</button>
+            </div>
+
+            <div class="card">
+                <h3>AI 图片生成</h3>
+                <label>选择模型</label>
+                <select id="modelSelect">
+                    <option value="pro">Gemini Pro（快速）</option>
+                    <option value="ultra">Gemini Ultra（高质量）</option>
+                </select>
+
+                <label>图片尺寸</label>
+                <select id="sizeSelect">
+                    <option value="1024x1024">1024 x 1024（标准）</option>
+                    <option value="1536x1536">1536 x 1536（2K高清）</option>
+                    <option value="2048x2048">2048 x 2048（4K超清）</option>
+                </select>
+
+                <label>图片描述</label>
+                <textarea id="prompt" placeholder="例如：一只穿宇航服的猫咪在月球上看地球，4K超高清"></textarea>
+
+                <button class="btn-primary" id="genBtn">生成图片</button>
+
+                <div id="error" class="error-box"></div>
+                <div id="textResult" class="text-result"></div>
+                <div id="imageBox" class="image-box"></div>
+            </div>
+        </div>
+
+        <!-- 历史记录页面 -->
+        <div id="page-history" class="page">
+            <div class="card">
+                <h3>生成历史</h3>
+                <div id="historyList">
+                    <p style="color:#aaa; text-align:center; padding:30px 0;">暂无历史记录</p>
+                </div>
+                <button class="btn-secondary" id="clearHistoryBtn" style="margin-top:16px;">清空历史记录</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 购买弹窗 -->
+    <div id="buyModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeBuyBtn">X</button>
+            <h3 id="modalTitle">确认购买</h3>
+            <p id="modalDesc">套餐详情</p>
+            <div class="price-big" id="modalPrice">0</div>
+            <p style="color:#999; font-size:12px; margin-bottom:16px;">购买后将生成专属访问令牌，请妥善保存</p>
+            <button class="btn-primary" id="confirmBuyBtn">确认购买 生成令牌</button>
+            <button class="btn-secondary" id="cancelBuyBtn">取消</button>
+        </div>
+    </div>
+
+    <!-- 令牌展示弹窗 -->
+    <div id="tokenModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeTokenBtn">X</button>
+            <h3>购买成功!</h3>
+            <p>您的专属访问令牌：</p>
+            <div class="token-display" id="newToken"></div>
+            <p style="color:#d32f2f; font-size:12px;">请立即复制保存，关闭后无法再次查看</p>
+            <button class="copy-btn" id="copyBtn">复制令牌</button>
+            <button class="btn-secondary" id="closeTokenBtn2">我已保存，关闭</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // 配置：改成你的 Cloudflare Worker 地址
+        // ============================================
+        var API_URL = "https://gemini-proxy.huangyuetian56.workers.dev";
+
+        var selectedPlan = null;
+        var history = [];
+
+        try {
+            history = JSON.parse(localStorage.getItem("genHistory") || "[]");
+        } catch(e) {
+            history = [];
+        }
+
+        // ---- 页面切换 ----
+        document.getElementById("tab-plans").addEventListener("click", function() { switchTab("plans"); });
+        document.getElementById("tab-generate").addEventListener("click", function() { switchTab("generate"); });
+        document.getElementById("tab-history").addEventListener("click", function() { switchTab("history"); });
+
+        function switchTab(name) {
+            var tabs = document.querySelectorAll(".tab");
+            for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove("active"); }
+
+            document.getElementById("tab-" + name).classList.add("active");
+
+            var pages = document.querySelectorAll(".page");
+            for (var i = 0; i < pages.length; i++) { pages[i].classList.remove("active"); }
+
+            document.getElementById("page-" + name).classList.add("active");
+
+            if (name === "history") { renderHistory(); }
+        }
+
+        // ---- 套餐点击 ----
+        var planCards = document.querySelectorAll(".plan-card");
+        for (var i = 0; i < planCards.length; i++) {
+            planCards[i].addEventListener("click", function() {
+                // 清除之前的选中
+                for (var j = 0; j < planCards.length; j++) { planCards[j].classList.remove("selected"); }
+                this.classList.add("selected");
+
+                selectedPlan = {
+                    id: this.getAttribute("data-plan"),
+                    name: this.getAttribute("data-name"),
+                    price: parseFloat(this.getAttribute("data-price")),
+                    count: parseInt(this.getAttribute("data-count")),
+                    days: parseFloat(this.getAttribute("data-days"))
+                };
+
+                document.getElementById("modalTitle").textContent = "确认购买";
+                document.getElementById("modalDesc").textContent = selectedPlan.name;
+                document.getElementById("modalPrice").textContent = selectedPlan.price + " 元";
+                document.getElementById("buyModal").classList.add("show");
+            });
+        }
+
+        // ---- 关闭购买弹窗 ----
+        document.getElementById("closeBuyBtn").addEventListener("click", function() {
+            document.getElementById("buyModal").classList.remove("show");
+        });
+        document.getElementById("cancelBuyBtn").addEventListener("click", function() {
+            document.getElementById("buyModal").classList.remove("show");
+        });
+        document.getElementById("buyModal").addEventListener("click", function(e) {
+            if (e.target === this) { this.classList.remove("show"); }
+        });
+
+        // ---- 关闭令牌弹窗 ----
+        document.getElementById("closeTokenBtn").addEventListener("click", function() {
+            document.getElementById("tokenModal").classList.remove("show");
+            switchTab("generate");
+        });
+        document.getElementById("closeTokenBtn2").addEventListener("click", function() {
+            document.getElementById("tokenModal").classList.remove("show");
+            switchTab("generate");
+        });
+        document.getElementById("tokenModal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                this.classList.remove("show");
+                switchTab("generate");
+            }
+        });
+
+        // ---- 确认购买 ----
+        document.getElementById("confirmBuyBtn").addEventListener("click", function() {
+            if (!selectedPlan) { return; }
+
+            var token = generateRandomToken();
+            var expireDate = new Date();
+            expireDate.setDate(expireDate.getDate() + Math.ceil(selectedPlan.days));
+
+            var userData = {
+                token: token,
+                plan: selectedPlan.name,
+                remaining: selectedPlan.count,
+                used: 0,
+                expire: expireDate.toISOString(),
+                createdAt: new Date().toISOString()
+            };
+
+            var tokens = [];
+            try { tokens = JSON.parse(localStorage.getItem("userTokens") || "[]"); } catch(e) { tokens = []; }
+            tokens.push(userData);
+            localStorage.setItem("userTokens", JSON.stringify(tokens));
+            localStorage.setItem("currentToken", token);
+
+            document.getElementById("buyModal").classList.remove("show");
+            document.getElementById("newToken").textContent = token;
+            document.getElementById("tokenModal").classList.add("show");
+
+            updateStatusBar(userData);
+            document.getElementById("token").value = token;
+        });
+
+        function generateRandomToken() {
+            var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var result = "nb_";
+            for (var i = 0; i < 32; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        // ---- 复制令牌 ----
+        document.getElementById("copyBtn").addEventListener("click", function() {
+            var token = document.getElementById("newToken").textContent;
+            var btn = this;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(token).then(function() {
+                    btn.textContent = "已复制!";
+                    setTimeout(function() { btn.textContent = "复制令牌"; }, 2000);
+                });
+            } else {
+                var input = document.createElement("input");
+                input.value = token;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand("copy");
+                document.body.removeChild(input);
+                btn.textContent = "已复制!";
+                setTimeout(function() { btn.textContent = "复制令牌"; }, 2000);
+            }
+        });
+
+        // ---- 查询额度 ----
+        document.getElementById("checkBtn").addEventListener("click", function() {
+            var token = document.getElementById("token").value.trim();
+            if (!token) { alert("请先输入令牌"); return; }
+
+            var tokens = [];
+            try { tokens = JSON.parse(localStorage.getItem("userTokens") || "[]"); } catch(e) {}
+            var user = null;
+            for (var i = 0; i < tokens.length; i++) {
+                if (tokens[i].token === token) { user = tokens[i]; break; }
+            }
+
+            if (user) {
+                updateStatusBar(user);
+                document.getElementById("userPlan").textContent = user.plan;
+                var remain = user.remaining === 9999 ? "无限次" : user.remaining + "次";
+                alert("令牌有效!\n套餐: " + user.plan + "\n剩余: " + remain);
+            } else {
+                alert("令牌无效或已过期");
+            }
+        });
+
+        function updateStatusBar(user) {
+            document.getElementById("remainCount").textContent = user.remaining === 9999 ? "无限" : user.remaining;
+            document.getElementById("usedCount").textContent = user.used || 0;
+            var exp = new Date(user.expire);
+            document.getElementById("expireDate").textContent = (exp.getMonth() + 1) + "/" + exp.getDate();
+            document.getElementById("userPlan").textContent = user.plan || "已登录";
+        }
+
+        // ---- 保存令牌 ----
+        document.getElementById("token").addEventListener("change", function() {
+            var val = this.value.trim();
+            if (val) { localStorage.setItem("currentToken", val); }
+        });
+
+        // ---- 图片生成 ----
+        document.getElementById("genBtn").addEventListener("click", function() {
+            var token = document.getElementById("token").value.trim();
+            var prompt = document.getElementById("prompt").value.trim();
+            var model = document.getElementById("modelSelect").value;
+            var size = document.getElementById("sizeSelect").value;
+            var btn = this;
+
+            var errorDiv = document.getElementById("error");
+            var textDiv = document.getElementById("textResult");
+            var imageBox = document.getElementById("imageBox");
+
+            errorDiv.style.display = "none";
+            textDiv.style.display = "none";
+            imageBox.style.display = "none";
+
+            if (!token) { showError("请先输入访问令牌"); return; }
+            if (!prompt) { showError("请输入图片描述"); return; }
+
+            var tokens = [];
+            try { tokens = JSON.parse(localStorage.getItem("userTokens") || "[]"); } catch(e) {}
+            var user = null;
+            for (var i = 0; i < tokens.length; i++) {
+                if (tokens[i].token === token) { user = tokens[i]; break; }
+            }
+            if (user && user.remaining !== 9999 && user.remaining <= 0) {
+                showError("使用次数已耗尽，请购买新套餐");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = "AI 正在创作中...";
+
+            var fullPrompt = prompt + " 图片尺寸" + size + " 高清画质";
+
+            fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ prompt: fullPrompt, model: model, size: size })
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.error) {
+                    var msg = typeof data.error === "string" ? data.error : JSON.stringify(data.error.message || data.error);
+                    showError(msg);
+                    return;
+                }
+
+                if (data.candidates) {
+                    var parts = data.candidates[0].content.parts;
+
+                    for (var i = 0; i < parts.length; i++) {
+                        var part = parts[i];
+                        if (part.text) {
+                            textDiv.textContent = part.text;
+                            textDiv.style.display = "block";
+                        }
+                        if (part.inlineData) {
+                            var src = "data:" + part.inlineData.mimeType + ";base64," + part.inlineData.data;
+                            imageBox.innerHTML = '<img src="' + src + '" /><br><a class="download-btn" href="' + src + '" download="nanobanana-' + Date.now() + '.png">下载图片</a>';
+                            imageBox.style.display = "block";
+
+                            addHistory(prompt, src);
+
+                            if (user && user.remaining !== 9999) {
+                                user.remaining--;
+                                user.used = (user.used || 0) + 1;
+                                localStorage.setItem("userTokens", JSON.stringify(tokens));
+                                updateStatusBar(user);
+                            }
+                        }
+                    }
+                }
+            })
+            .catch(function(err) {
+                showError("网��错误：" + err.message);
+            })
+            .finally(function() {
+                btn.disabled = false;
+                btn.textContent = "生成图片";
+            });
+        });
+
+        function showError(msg) {
+            var errorDiv = document.getElementById("error");
+            errorDiv.textContent = msg;
+            errorDiv.style.display = "block";
+        }
+
+        // ---- 历史记录 ----
+        function addHistory(prompt, imageSrc) {
+            history.unshift({
+                prompt: prompt,
+                fullImage: imageSrc,
+                time: new Date().toLocaleString("zh-CN")
+            });
+            if (history.length > 20) { history = history.slice(0, 20); }
+            try {
+                localStorage.setItem("genHistory", JSON.stringify(history));
+            } catch(e) {
+                history = history.slice(0, 5);
+                try { localStorage.setItem("genHistory", JSON.stringify(history)); } catch(e2) {}
+            }
+        }
+
+        function renderHistory() {
+            var list = document.getElementById("historyList");
+            if (history.length === 0) {
+                list.innerHTML = '<p style="color:#aaa; text-align:center; padding:30px 0;">暂无历史记录</p>';
+                return;
+            }
+
+            var html = "";
+            for (var i = 0; i < history.length; i++) {
+                var h = history[i];
+                html += '<div class="history-item">';
+                if (h.fullImage) {
+                    html += '<img src="' + h.fullImage + '" />';
+                }
+                html += '<div class="history-info">';
+                html += '<div class="prompt-text">' + h.prompt.substring(0, 50) + '</div>';
+                html += '<div class="time">' + h.time + '</div>';
+                html += '</div></div>';
+            }
+            list.innerHTML = html;
+        }
+
+        document.getElementById("clearHistoryBtn").addEventListener("click", function() {
+            if (confirm("确定清空所有历史记录？")) {
+                history = [];
+                localStorage.removeItem("genHistory");
+                renderHistory();
+            }
+        });
+
+        // ---- 回车发送 ----
+        document.getElementById("prompt").addEventListener("keydown", function(e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById("genBtn").click();
+            }
+        });
+
+        // ---- 初始化 ----
+        var savedToken = localStorage.getItem("currentToken");
+        if (savedToken) {
+            document.getElementById("token").value = savedToken;
+            var allTokens = [];
+            try { allTokens = JSON.parse(localStorage.getItem("userTokens") || "[]"); } catch(e) {}
+            for (var i = 0; i < allTokens.length; i++) {
+                if (allTokens[i].token === savedToken) {
+                    updateStatusBar(allTokens[i]);
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
