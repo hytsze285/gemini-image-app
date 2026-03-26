@@ -544,7 +544,7 @@
     </div>
 
     <!-- 令牌展示弹窗 -->
-    <div id="tokenModal" class="modal-overlay hidden">
+    <div id="tokenModal" class="modal-overlay hidden" onclick="if(event.target===this)closeTokenModal()">
         <div class="modal">
             <h3>🎉 购买成功！</h3>
             <p>您的专属访问令牌：</p>
@@ -653,9 +653,10 @@
         }
 
         function closeTokenModal() {
-            document.getElementById("tokenModal").classList.add("hidden");
-            switchTab("generate");
-        }
+    document.getElementById("tokenModal").classList.add("hidden");
+    document.getElementById("buyModal").classList.add("hidden");
+    switchTab("generate");
+}
 
         // ---- 令牌管理 ----
         function saveToken() {
