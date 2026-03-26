@@ -16,7 +16,6 @@
             flex-direction: column;
         }
 
-        /* 顶部导航 */
         .header {
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
@@ -31,11 +30,7 @@
         .logo { color: white; font-size: 18px; font-weight: 700; }
         .logo em { color: #f5576c; font-style: normal; }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .header-right { display: flex; align-items: center; gap: 10px; }
 
         .badge {
             background: linear-gradient(135deg, #f093fb, #f5576c);
@@ -57,12 +52,7 @@
 
         .header-btn:hover { background: rgba(255,255,255,0.2); }
 
-        /* 主布局 */
-        .app-layout {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
+        .app-layout { display: flex; flex: 1; overflow: hidden; }
 
         /* 侧边栏 */
         .sidebar {
@@ -114,16 +104,9 @@
             background: none;
         }
 
-        .mode-tab.active {
-            background: rgba(255,255,255,0.15);
-            color: white;
-        }
+        .mode-tab.active { background: rgba(255,255,255,0.15); color: white; }
 
-        .sidebar-nav {
-            padding: 12px;
-            flex: 1;
-            overflow-y: auto;
-        }
+        .sidebar-nav { padding: 12px; flex: 1; overflow-y: auto; }
 
         .nav-label {
             color: rgba(255,255,255,0.4);
@@ -167,7 +150,31 @@
 
         .token-input-small::placeholder { color: rgba(255,255,255,0.3); }
 
-        /* 聊天主区域 */
+        .verify-btn {
+            width: 100%;
+            margin-top: 6px;
+            padding: 6px;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .verify-btn:hover { background: rgba(255,255,255,0.18); color: white; }
+
+        .token-status {
+            margin-top: 6px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.5;
+        }
+
+        .token-status.valid { color: #43e97b; }
+        .token-status.invalid { color: #f5576c; }
+
+        /* 聊天区域 */
         .chat-area {
             flex: 1;
             display: flex;
@@ -194,17 +201,8 @@
             text-align: center;
         }
 
-        .welcome-screen h2 {
-            color: white;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .welcome-screen p {
-            color: rgba(255,255,255,0.5);
-            font-size: 15px;
-            margin-bottom: 30px;
-        }
+        .welcome-screen h2 { color: white; font-size: 28px; margin-bottom: 10px; }
+        .welcome-screen p { color: rgba(255,255,255,0.5); font-size: 15px; margin-bottom: 30px; }
 
         .quick-actions {
             display: grid;
@@ -228,7 +226,6 @@
         .quick-action .qa-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
         .quick-action .qa-desc { font-size: 12px; color: rgba(255,255,255,0.5); }
 
-        /* 消息气泡 */
         .message {
             max-width: 75%;
             padding: 14px 18px;
@@ -277,10 +274,7 @@
             color: rgba(255,255,255,0.5);
         }
 
-        .typing-dots span {
-            animation: blink 1.4s infinite;
-            font-size: 20px;
-        }
+        .typing-dots span { animation: blink 1.4s infinite; font-size: 20px; }
         .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
         .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
 
@@ -290,7 +284,6 @@
             80%, 100% { opacity: 0.2; }
         }
 
-        /* 输入区 */
         .chat-input-area {
             padding: 16px 20px;
             border-top: 1px solid rgba(255,255,255,0.08);
@@ -342,9 +335,6 @@
             color: rgba(255,255,255,0.3);
             font-size: 11px;
             margin-top: 8px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         /* 套餐页面 */
@@ -419,10 +409,12 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            max-width: 400px;
+            max-width: 420px;
             width: 90%;
             text-align: center;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-close {
@@ -439,22 +431,81 @@
         .modal-close:hover { color: #333; }
         .modal h3 { margin-bottom: 12px; font-size: 18px; }
         .modal p { color: #666; font-size: 14px; margin-bottom: 6px; }
-        .price-big { font-size: 36px; color: #f5576c; font-weight: 700; margin: 14px 0; }
 
-        .token-display {
-            background: #f5f5f5;
+        .price-big { font-size: 36px; color: #f5576c; font-weight: 700; margin: 10px 0; }
+
+        .plan-summary {
+            background: #f8f8f8;
+            border-radius: 10px;
             padding: 14px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 14px;
             margin: 14px 0;
-            word-break: break-all;
-            user-select: all;
+            text-align: left;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.8;
         }
+
+        .pay-methods {
+            display: flex;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .pay-method {
+            flex: 1;
+            padding: 14px 10px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .pay-method:hover { border-color: #ccc; }
+        .pay-method.selected { border-color: #f5576c; background: #fff5f5; }
+
+        .pay-method .pay-icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .pay-method.wechat .pay-icon { color: #07c160; }
+        .pay-method.alipay .pay-icon { color: #1677ff; }
+        .pay-method.taobao .pay-icon { color: #ff6a00; }
+
+        .qr-box {
+            margin: 16px auto;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .qr-box.show { display: block; }
+
+        .qr-placeholder {
+            width: 180px;
+            height: 180px;
+            background: white;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            margin: 0 auto 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .qr-tip { font-size: 12px; color: #999; }
 
         .btn-primary {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: linear-gradient(135deg, #f093fb, #f5576c);
             color: white;
             border: none;
@@ -463,6 +514,9 @@
             font-weight: 600;
             cursor: pointer;
         }
+
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .btn-secondary {
             width: 100%;
@@ -476,6 +530,17 @@
             margin-top: 8px;
         }
 
+        .token-display {
+            background: #f5f5f5;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 14px 0;
+            word-break: break-all;
+            user-select: all;
+        }
+
         .copy-btn {
             padding: 10px 30px;
             background: linear-gradient(135deg, #43e97b, #38f9d7);
@@ -487,7 +552,44 @@
             color: #333;
         }
 
-        /* 手机适配 */
+        .order-steps {
+            text-align: left;
+            margin: 14px 0;
+            font-size: 13px;
+            color: #666;
+            line-height: 2;
+        }
+
+        .order-steps .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .order-steps .step-num {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+
+        .mobile-overlay.show { display: block; }
+
         @media (max-width: 768px) {
             .sidebar { display: none; }
             .sidebar.mobile-show {
@@ -498,23 +600,15 @@
                 width: 280px;
                 background: #1a1a2e;
             }
-            .mobile-overlay {
-                position: fixed;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background: rgba(0,0,0,0.5);
-                z-index: 998;
-                display: none;
-            }
-            .mobile-overlay.show { display: block; }
             .quick-actions { grid-template-columns: 1fr; }
             .plans-grid { grid-template-columns: 1fr; }
             .message { max-width: 90%; }
+            .pay-methods { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 顶部 -->
     <div class="header">
         <div style="display:flex;align-items:center;gap:12px;">
             <button class="header-btn" id="menuBtn" style="display:none;">Menu</button>
@@ -529,7 +623,6 @@
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <div class="app-layout">
-        <!-- 侧边栏 -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <button class="new-chat-btn" id="newChatBtn">+ 新对话</button>
@@ -544,24 +637,21 @@
                 <button class="nav-item active" id="navChat">AI 对话</button>
                 <button class="nav-item" id="navImage">AI 画图</button>
                 <button class="nav-item" id="navShop">套餐购买</button>
-
-                <div class="nav-label" style="margin-top:16px;">历史对话</div>
-                <div id="chatHistoryList">
-                    <div class="nav-item" style="color:rgba(255,255,255,0.3);cursor:default;">暂无历史</div>
-                </div>
             </div>
 
             <div class="sidebar-footer">
                 <input type="password" class="token-input-small" id="tokenInput" placeholder="输入访问令牌..." />
+                <button class="verify-btn" id="verifyBtn">验证令牌</button>
+                <div class="token-status" id="tokenStatus"></div>
             </div>
         </div>
 
-        <!-- 聊天主区域 -->
+        <!-- 聊天区 -->
         <div class="chat-area" id="chatPanel">
             <div class="chat-messages" id="chatMessages">
                 <div class="welcome-screen" id="welcomeScreen">
                     <h2>NanoBanana AI</h2>
-                    <p id="welcomeDesc">Gemini 驱动的智能助手，支持对话和图片生成</p>
+                    <p>Gemini 驱动的智能助手，支持对话和图片生成</p>
                     <div class="quick-actions">
                         <div class="quick-action" data-prompt="用简单的语言解释量子计算">
                             <div class="qa-title">解释概念</div>
@@ -588,7 +678,7 @@
                     <textarea class="chat-input" id="chatInput" placeholder="输入消息..." rows="1"></textarea>
                     <button class="send-btn" id="sendBtn">&#9654;</button>
                 </div>
-                <div class="input-hint" id="inputHint">当前模式: Chat 对话 | Enter 发送，Shift+Enter 换行</div>
+                <div class="input-hint" id="inputHint">当前模式: Chat 对话 | Enter 发送, Shift+Enter 换行</div>
             </div>
         </div>
 
@@ -596,32 +686,32 @@
         <div class="page-panel" id="shopPanel">
             <div class="section-title">Gemini Pro 套餐</div>
             <div class="plans-grid">
-                <div class="plan-card" data-name="3小时40次 Pro 体验" data-price="2.88" data-count="40" data-days="0.125">
+                <div class="plan-card" data-name="3小时40次 Pro 体验" data-price="2.88" data-count="40" data-days="1">
                     <span class="plan-tag">体验</span>
                     <div class="plan-name">3小时40次 1天体验pro</div>
-                    <div class="plan-desc">国内版 适合尝鲜</div>
+                    <div class="plan-desc">国内版 - 适合尝鲜</div>
                     <div class="plan-price">2.88 元</div>
                 </div>
                 <div class="plan-card" data-name="15天无限次 Pro" data-price="15" data-count="9999" data-days="15">
                     <div class="plan-name">无限次调用 15天pro</div>
-                    <div class="plan-desc">国内版 无限次调用</div>
+                    <div class="plan-desc">国内版 - 无限次调用</div>
                     <div class="plan-price">15 元</div>
                 </div>
                 <div class="plan-card" data-name="30天无限次 Pro" data-price="25" data-count="9999" data-days="30">
                     <span class="plan-tag recommend">热销</span>
                     <div class="plan-name">无限次调用 30天pro</div>
-                    <div class="plan-desc">国内版 性价比最高</div>
+                    <div class="plan-desc">国内版 - 性价比最高</div>
                     <div class="plan-price">25 元</div>
                 </div>
                 <div class="plan-card" data-name="90天无限次 Pro" data-price="60" data-count="9999" data-days="90">
                     <div class="plan-name">无限次调用 90天pro</div>
-                    <div class="plan-desc">国内版 季度畅享</div>
+                    <div class="plan-desc">国内版 - 季度畅享</div>
                     <div class="plan-price">60 元</div>
                 </div>
                 <div class="plan-card" data-name="365天无限次 Pro" data-price="180" data-count="9999" data-days="365">
                     <span class="plan-tag recommend">推荐</span>
                     <div class="plan-name">无限次调用 365天pro</div>
-                    <div class="plan-desc">国内版 年度最划算</div>
+                    <div class="plan-desc">国内版 - 年度最划算</div>
                     <div class="plan-price">180 元</div>
                 </div>
             </div>
@@ -631,18 +721,18 @@
                 <div class="plan-card" data-name="1天无限次 Ultra 体验" data-price="8.8" data-count="9999" data-days="1">
                     <span class="plan-tag">体验</span>
                     <div class="plan-name">无限次调用 1天体验Ultra</div>
-                    <div class="plan-desc">国内版 顶级模型</div>
+                    <div class="plan-desc">国内版 - 顶级模型</div>
                     <div class="plan-price">8.8 元</div>
                 </div>
                 <div class="plan-card" data-name="15天无限次 Ultra" data-price="50" data-count="9999" data-days="15">
                     <div class="plan-name">无限次调用 15天Ultra</div>
-                    <div class="plan-desc">国内版 高级体验</div>
+                    <div class="plan-desc">国内版 - 高级体验</div>
                     <div class="plan-price">50 元</div>
                 </div>
                 <div class="plan-card" data-name="30天无限次 Ultra" data-price="90" data-count="9999" data-days="30">
                     <span class="plan-tag recommend">热销</span>
                     <div class="plan-name">无限次调用 30天Ultra</div>
-                    <div class="plan-desc">国内版 顶级畅享</div>
+                    <div class="plan-desc">国内版 - 顶级畅享</div>
                     <div class="plan-price">90 元</div>
                 </div>
             </div>
@@ -652,29 +742,29 @@
                 <div class="plan-card" data-name="1天10张图片" data-price="3.8" data-count="10" data-days="1">
                     <span class="plan-tag">体验</span>
                     <div class="plan-name">1天体验版 10张图</div>
-                    <div class="plan-desc">国内直登 Gemini 3.0</div>
+                    <div class="plan-desc">国内直登 - Gemini 3.0</div>
                     <div class="plan-price">3.8 元</div>
                 </div>
                 <div class="plan-card" data-name="7天100张图片" data-price="25" data-count="100" data-days="7">
                     <div class="plan-name">7天使用 100张图</div>
-                    <div class="plan-desc">国内直登 支持2K高清</div>
+                    <div class="plan-desc">国内直登 - 支持2K高清</div>
                     <div class="plan-price">25 元</div>
                 </div>
                 <div class="plan-card" data-name="30天500张图片" data-price="100" data-count="500" data-days="30">
-                    <span class="plan-tag recommend">热销</span>
+                    <span class="plan-tag recommend">���销</span>
                     <div class="plan-name">30天使用 500张图</div>
-                    <div class="plan-desc">国内直登 支持4K超清</div>
+                    <div class="plan-desc">国内直登 - 支持4K超清</div>
                     <div class="plan-price">100 元</div>
                 </div>
                 <div class="plan-card" data-name="30天1000张图片" data-price="195" data-count="1000" data-days="30">
                     <div class="plan-name">30天使用 1000张图</div>
-                    <div class="plan-desc">国内直登 商业级</div>
+                    <div class="plan-desc">国内直登 - 商业级</div>
                     <div class="plan-price">195 元</div>
                 </div>
                 <div class="plan-card" data-name="30天2000张图片" data-price="385" data-count="2000" data-days="30">
                     <span class="plan-tag recommend">旗舰</span>
                     <div class="plan-name">30天使用 2000张图</div>
-                    <div class="plan-desc">国内直登 企业级</div>
+                    <div class="plan-desc">国内直登 - 企业级</div>
                     <div class="plan-price">385 元</div>
                 </div>
             </div>
@@ -685,33 +775,99 @@
     <div id="buyModal" class="modal-overlay">
         <div class="modal">
             <button class="modal-close" id="closeBuyBtn">X</button>
-            <h3 id="modalTitle">确认购买</h3>
-            <p id="modalDesc"></p>
+            <h3>购买套餐</h3>
+
+            <div class="plan-summary" id="planSummary"></div>
             <div class="price-big" id="modalPrice">0</div>
-            <p style="color:#999; font-size:12px; margin-bottom:14px;">购买后将生成专属访问令牌</p>
-            <button class="btn-primary" id="confirmBuyBtn">确认购买</button>
+
+            <p style="font-size:13px;color:#333;font-weight:600;margin-bottom:8px;">选择付款方式</p>
+            <div class="pay-methods">
+                <div class="pay-method wechat" data-pay="wechat">
+                    <span class="pay-icon">W</span>
+                    微信支付
+                </div>
+                <div class="pay-method alipay" data-pay="alipay">
+                    <span class="pay-icon">A</span>
+                    支付宝
+                </div>
+                <div class="pay-method taobao" data-pay="taobao">
+                    <span class="pay-icon">T</span>
+                    淘宝下单
+                </div>
+            </div>
+
+            <div class="qr-box" id="qrBox">
+                <div class="qr-placeholder" id="qrPlaceholder">
+                    请配置收款码
+                </div>
+                <div class="qr-tip" id="qrTip"></div>
+            </div>
+
+            <div class="order-steps">
+                <div class="step"><span class="step-num">1</span> 选择付款方式并完成支付</div>
+                <div class="step"><span class="step-num">2</span> 支付后点击下方「我已付款」</div>
+                <div class="step"><span class="step-num">3</span> 系统验证后自动生成密钥</div>
+            </div>
+
+            <button class="btn-primary" id="paidBtn">我已付款，生成密钥</button>
             <button class="btn-secondary" id="cancelBuyBtn">取消</button>
         </div>
     </div>
 
-    <!-- 令牌弹窗 -->
+    <!-- 密钥弹窗 -->
     <div id="tokenModal" class="modal-overlay">
         <div class="modal">
             <button class="modal-close" id="closeTokenBtn">X</button>
-            <h3>购买成功!</h3>
+            <h3>密钥生成成功!</h3>
             <p>您的专属访问令牌：</p>
             <div class="token-display" id="newToken"></div>
-            <p style="color:#d32f2f; font-size:12px;">请立即复制保存</p>
+            <p style="color:#d32f2f; font-size:12px; margin-bottom:4px;">请立即复制保存，关闭后无法再次查看!</p>
+            <p style="color:#999; font-size:12px; margin-bottom:14px;">在左下角「访问令牌」输入框粘贴即可使用</p>
             <button class="copy-btn" id="copyBtn">复制令牌</button>
             <button class="btn-secondary" id="closeTokenBtn2">我已保存，关闭</button>
         </div>
     </div>
 
+    <!-- 付款确认弹窗 -->
+    <div id="confirmPayModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeConfirmBtn">X</button>
+            <h3>付款确认</h3>
+            <p style="margin-bottom:14px;">请输入付款时备注的订单号，或联系客服确认</p>
+            <input type="text" id="orderIdInput" placeholder="输入订单号或付款备注" style="width:100%;padding:12px;border:2px solid #e8e8e8;border-radius:10px;font-size:14px;margin-bottom:14px;" />
+            <button class="btn-primary" id="confirmOrderBtn">确认并生成密钥</button>
+            <button class="btn-secondary" id="cancelConfirmBtn">返回</button>
+        </div>
+    </div>
+
     <script>
+        // ============================================
+        // 配置区域 - 修改为你的实际信息
+        // ============================================
         var API_URL = "https://gemini-proxy.huangyuetian56.workers.dev";
+        var ADMIN_PASS = "";  // 留空，管理员密码在 Worker 环境变量里
+
+        // 收款码图片地址（替换为你自己的收款码图片URL）
+        var PAY_CONFIG = {
+            wechat: {
+                qrImage: "",  // 微信收款码图片URL，如 "https://你的图片地址/wechat-qr.jpg"
+                tip: "请扫码支付，备注「NB+手机尾号4位」"
+            },
+            alipay: {
+                qrImage: "",  // 支付宝收款码图片URL
+                tip: "请扫码支付，备注「NB+手机尾号4位」"
+            },
+            taobao: {
+                qrImage: "",  // 淘宝店铺二维码URL（可选）
+                tip: "请前往��宝店铺搜索「NanoBanana AI」下单，付款后填写淘宝订单号"
+            }
+        };
+        // ============================================
+
         var currentMode = "chat";
         var chatHistory = [];
         var selectedPlan = null;
+        var selectedPayMethod = "";
         var isGenerating = false;
 
         // ---- 模式切换 ----
@@ -730,11 +886,9 @@
             document.getElementById("navImage").classList.toggle("active", mode === "image");
             document.getElementById("modelBadge").textContent = mode === "chat" ? "Chat" : "Image";
             document.getElementById("inputHint").textContent = mode === "chat"
-                ? "当前模式: Chat 对话 | Enter 发送，Shift+Enter 换行"
-                : "当前模式: Image 画图 | Enter 发送，Shift+Enter 换行";
-            document.getElementById("chatInput").placeholder = mode === "chat"
-                ? "输入消息..."
-                : "描述你想生成的图片...";
+                ? "当前模式: Chat 对话 | Enter 发送, Shift+Enter 换行"
+                : "当前模式: Image 画图 | Enter 发送, Shift+Enter 换行";
+            document.getElementById("chatInput").placeholder = mode === "chat" ? "输入消息..." : "描述你想生成的图片...";
         }
 
         function showChat() {
@@ -757,32 +911,60 @@
         document.getElementById("newChatBtn").addEventListener("click", function() {
             chatHistory = [];
             var msgs = document.getElementById("chatMessages");
-            msgs.innerHTML = "";
-            // 重新显示欢迎界面
-            var welcome = document.createElement("div");
-            welcome.className = "welcome-screen";
-            welcome.id = "welcomeScreen";
-            welcome.innerHTML = '<h2>NanoBanana AI</h2><p>Gemini 驱动的智能助手</p>';
-            msgs.appendChild(welcome);
+            msgs.innerHTML = '<div class="welcome-screen" id="welcomeScreen"><h2>NanoBanana AI</h2><p>Gemini 驱动的智能助手</p></div>';
             closeMobileMenu();
+        });
+
+        // ---- 验证令牌 ----
+        document.getElementById("verifyBtn").addEventListener("click", function() {
+            var token = document.getElementById("tokenInput").value.trim();
+            var statusEl = document.getElementById("tokenStatus");
+            if (!token) {
+                statusEl.className = "token-status invalid";
+                statusEl.textContent = "请输入令牌";
+                return;
+            }
+
+            statusEl.className = "token-status";
+            statusEl.textContent = "验证中...";
+
+            fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "verify", token: token })
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.valid) {
+                    var remain = data.remaining === 9999 ? "无限" : data.remaining;
+                    var exp = new Date(data.expire);
+                    var expStr = exp.getFullYear() + "/" + (exp.getMonth()+1) + "/" + exp.getDate();
+                    statusEl.className = "token-status valid";
+                    statusEl.innerHTML = "有效! 套餐: " + data.plan + "<br>剩余: " + remain + "次 | 到期: " + expStr;
+                    localStorage.setItem("currentToken", token);
+                } else {
+                    var reason = data.expired ? "已过期" : data.noRemaining ? "次数用尽" : "无效令牌";
+                    statusEl.className = "token-status invalid";
+                    statusEl.textContent = reason;
+                }
+            })
+            .catch(function() {
+                statusEl.className = "token-status invalid";
+                statusEl.textContent = "网络错误";
+            });
         });
 
         // ---- 发送消息 ----
         document.getElementById("sendBtn").addEventListener("click", sendMessage);
         document.getElementById("chatInput").addEventListener("keydown", function(e) {
-            if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
+            if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
         });
 
-        // 自动调整高度
         document.getElementById("chatInput").addEventListener("input", function() {
             this.style.height = "auto";
             this.style.height = Math.min(this.scrollHeight, 150) + "px";
         });
 
-        // 快速操作
         var quickActions = document.querySelectorAll(".quick-action");
         for (var i = 0; i < quickActions.length; i++) {
             quickActions[i].addEventListener("click", function() {
@@ -796,27 +978,20 @@
 
         function sendMessage() {
             if (isGenerating) return;
-
             var input = document.getElementById("chatInput");
             var text = input.value.trim();
             if (!text) return;
 
             var token = document.getElementById("tokenInput").value.trim();
-            if (!token) {
-                alert("请先在左下角输入访问令牌");
-                return;
-            }
+            if (!token) { alert("请先在左下角输入访问令牌"); return; }
 
-            // 移除欢迎界面
             var welcome = document.getElementById("welcomeScreen");
             if (welcome) { welcome.remove(); }
 
-            // 显示用户消息
             addMessage("user", text);
             input.value = "";
             input.style.height = "auto";
 
-            // 显示加载动画
             var loadingId = "loading-" + Date.now();
             addLoading(loadingId);
 
@@ -829,11 +1004,7 @@
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + token
                 },
-                body: JSON.stringify({
-                    prompt: text,
-                    mode: currentMode,
-                    history: chatHistory
-                })
+                body: JSON.stringify({ prompt: text, mode: currentMode, history: chatHistory })
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
@@ -843,6 +1014,15 @@
                     var msg = typeof data.error === "string" ? data.error : JSON.stringify(data.error.message || data.error);
                     addMessage("bot", "Error: " + msg);
                     return;
+                }
+
+                // 更新令牌状态
+                if (data._userInfo) {
+                    var info = data._userInfo;
+                    var statusEl = document.getElementById("tokenStatus");
+                    var remain = info.remaining === 9999 ? "无限" : info.remaining;
+                    statusEl.className = "token-status valid";
+                    statusEl.innerHTML = "套餐: " + info.plan + " | 剩余: " + remain + "次";
                 }
 
                 if (data.candidates && data.candidates[0]) {
@@ -863,15 +1043,9 @@
                     }
 
                     addMessageHtml("bot", botHtml);
-
-                    // 保存到对话历史
                     chatHistory.push({ role: "user", parts: [{ text: text }] });
                     chatHistory.push({ role: "model", parts: [{ text: botText || "[图片]" }] });
-
-                    // 限制历史长度
-                    if (chatHistory.length > 20) {
-                        chatHistory = chatHistory.slice(chatHistory.length - 20);
-                    }
+                    if (chatHistory.length > 20) { chatHistory = chatHistory.slice(chatHistory.length - 20); }
                 }
             })
             .catch(function(err) {
@@ -918,7 +1092,6 @@
         }
 
         function formatText(text) {
-            // 简单格式化：代码块、加粗、换行
             text = text.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;overflow-x:auto;margin:8px 0;"><code>$2</code></pre>');
             text = text.replace(/`([^`]+)`/g, '<code style="background:rgba(0,0,0,0.2);padding:2px 6px;border-radius:4px;">$1</code>');
             text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
@@ -937,16 +1110,118 @@
                     name: this.getAttribute("data-name"),
                     price: parseFloat(this.getAttribute("data-price")),
                     count: parseInt(this.getAttribute("data-count")),
-                    days: parseFloat(this.getAttribute("data-days"))
+                    days: parseInt(this.getAttribute("data-days"))
                 };
 
-                document.getElementById("modalDesc").textContent = selectedPlan.name;
+                var countText = selectedPlan.count === 9999 ? "无限次" : selectedPlan.count + "次";
+                document.getElementById("planSummary").innerHTML =
+                    "套餐: " + selectedPlan.name + "<br>" +
+                    "有效期: " + selectedPlan.days + "天<br>" +
+                    "使用次数: " + countText;
                 document.getElementById("modalPrice").textContent = selectedPlan.price + " 元";
+
+                // 重置付款方式
+                selectedPayMethod = "";
+                var methods = document.querySelectorAll(".pay-method");
+                for (var m = 0; m < methods.length; m++) { methods[m].classList.remove("selected"); }
+                document.getElementById("qrBox").classList.remove("show");
+
                 document.getElementById("buyModal").classList.add("show");
             });
         }
 
-        // 关闭弹窗
+        // 选择付款方式
+        var payMethods = document.querySelectorAll(".pay-method");
+        for (var i = 0; i < payMethods.length; i++) {
+            payMethods[i].addEventListener("click", function() {
+                for (var j = 0; j < payMethods.length; j++) { payMethods[j].classList.remove("selected"); }
+                this.classList.add("selected");
+                selectedPayMethod = this.getAttribute("data-pay");
+
+                var config = PAY_CONFIG[selectedPayMethod];
+                var qrBox = document.getElementById("qrBox");
+                var placeholder = document.getElementById("qrPlaceholder");
+                var tip = document.getElementById("qrTip");
+
+                if (config.qrImage) {
+                    placeholder.innerHTML = '<img src="' + config.qrImage + '" style="width:160px;height:160px;border-radius:8px;" />';
+                } else {
+                    if (selectedPayMethod === "taobao") {
+                        placeholder.textContent = "请在淘宝搜索店铺下单";
+                    } else {
+                        placeholder.textContent = "请配置收款码图片";
+                    }
+                }
+                tip.textContent = config.tip;
+                qrBox.classList.add("show");
+            });
+        }
+
+        // 我已付款
+        document.getElementById("paidBtn").addEventListener("click", function() {
+            if (!selectedPayMethod) {
+                alert("请先选择付款方式");
+                return;
+            }
+            document.getElementById("buyModal").classList.remove("show");
+            document.getElementById("confirmPayModal").classList.add("show");
+        });
+
+        // 确认订单 -> 生成密钥
+        document.getElementById("confirmOrderBtn").addEventListener("click", function() {
+            var orderId = document.getElementById("orderIdInput").value.trim();
+            if (!orderId) {
+                alert("请输入订单号或付款备注");
+                return;
+            }
+
+            this.disabled = true;
+            this.textContent = "生成中...";
+
+            var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var token = "nb_";
+            for (var i = 0; i < 32; i++) { token += chars.charAt(Math.floor(Math.random() * chars.length)); }
+
+            // 调用 Worker 写入 KV
+            fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    action: "addkey",
+                    adminPass: ADMIN_PASS,
+                    token: token,
+                    plan: selectedPlan.name,
+                    remaining: selectedPlan.count,
+                    days: selectedPlan.days,
+                    orderId: orderId,
+                    payMethod: selectedPayMethod
+                })
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                document.getElementById("confirmPayModal").classList.remove("show");
+
+                if (data.success) {
+                    document.getElementById("newToken").textContent = token;
+                    document.getElementById("tokenModal").classList.add("show");
+                    document.getElementById("tokenInput").value = token;
+                    localStorage.setItem("currentToken", token);
+                } else {
+                    alert("生成失败: " + (data.error || "未知错误") + "\n请联系客服处理");
+                }
+            })
+            .catch(function(err) {
+                alert("网络错误，请重试或联系客服");
+            })
+            .finally(function() {
+                var btn = document.getElementById("confirmOrderBtn");
+                btn.disabled = false;
+                btn.textContent = "确认并生成密钥";
+                document.getElementById("orderIdInput").value = "";
+            });
+        });
+
+        // ---- 关闭弹窗 ----
         document.getElementById("closeBuyBtn").addEventListener("click", function() { document.getElementById("buyModal").classList.remove("show"); });
         document.getElementById("cancelBuyBtn").addEventListener("click", function() { document.getElementById("buyModal").classList.remove("show"); });
         document.getElementById("buyModal").addEventListener("click", function(e) { if (e.target === this) this.classList.remove("show"); });
@@ -955,37 +1230,12 @@
         document.getElementById("closeTokenBtn2").addEventListener("click", function() { document.getElementById("tokenModal").classList.remove("show"); });
         document.getElementById("tokenModal").addEventListener("click", function(e) { if (e.target === this) this.classList.remove("show"); });
 
-        // 确认购买
-        document.getElementById("confirmBuyBtn").addEventListener("click", function() {
-            if (!selectedPlan) return;
-
-            var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-            var token = "nb_";
-            for (var i = 0; i < 32; i++) { token += chars.charAt(Math.floor(Math.random() * chars.length)); }
-
-            var expire = new Date();
-            expire.setDate(expire.getDate() + Math.ceil(selectedPlan.days));
-
-            var userData = {
-                token: token,
-                plan: selectedPlan.name,
-                remaining: selectedPlan.count,
-                used: 0,
-                expire: expire.toISOString()
-            };
-
-            var allTokens = [];
-            try { allTokens = JSON.parse(localStorage.getItem("userTokens") || "[]"); } catch(e) {}
-            allTokens.push(userData);
-            localStorage.setItem("userTokens", JSON.stringify(allTokens));
-
-            document.getElementById("tokenInput").value = token;
-            localStorage.setItem("currentToken", token);
-
-            document.getElementById("buyModal").classList.remove("show");
-            document.getElementById("newToken").textContent = token;
-            document.getElementById("tokenModal").classList.add("show");
+        document.getElementById("closeConfirmBtn").addEventListener("click", function() { document.getElementById("confirmPayModal").classList.remove("show"); });
+        document.getElementById("cancelConfirmBtn").addEventListener("click", function() {
+            document.getElementById("confirmPayModal").classList.remove("show");
+            document.getElementById("buyModal").classList.add("show");
         });
+        document.getElementById("confirmPayModal").addEventListener("click", function(e) { if (e.target === this) this.classList.remove("show"); });
 
         // 复制令牌
         document.getElementById("copyBtn").addEventListener("click", function() {
@@ -1020,10 +1270,7 @@
             document.getElementById("mobileOverlay").classList.remove("show");
         }
 
-        // 检测手机
-        if (window.innerWidth <= 768) {
-            document.getElementById("menuBtn").style.display = "block";
-        }
+        if (window.innerWidth <= 768) { document.getElementById("menuBtn").style.display = "block"; }
         window.addEventListener("resize", function() {
             document.getElementById("menuBtn").style.display = window.innerWidth <= 768 ? "block" : "none";
         });
