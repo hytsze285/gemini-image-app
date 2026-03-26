@@ -531,8 +531,9 @@
 
     <!-- 购买弹窗 -->
     <div id="buyModal" class="modal-overlay hidden" onclick="closeBuyModal(event)">
-        <div class="modal">
-            <h3 id="modalTitle">确认购买</h3>
+    <div class="modal" style="position:relative;">
+        <div onclick="document.getElementById('buyModal').classList.add('hidden')" style="position:absolute;top:10px;right:16px;font-size:24px;cursor:pointer;color:#999;z-index:10;">✕</div>
+        <h3 id="modalTitle">确认购买</h3>
             <p id="modalDesc">套餐详情</p>
             <div class="price-big" id="modalPrice">¥0</div>
             <p style="color:#999; font-size:12px; margin-bottom:16px;">
@@ -544,9 +545,10 @@
     </div>
 
     <!-- 令牌展示弹窗 -->
-    <div id="tokenModal" class="modal-overlay hidden" onclick="if(event.target===this)closeTokenModal()">
-        <div class="modal">
-            <h3>🎉 购买成功！</h3>
+    <div id="tokenModal" class="modal-overlay hidden">
+    <div class="modal" style="position:relative;">
+        <div onclick="document.getElementById('tokenModal').classList.add('hidden')" style="position:absolute;top:10px;right:16px;font-size:24px;cursor:pointer;color:#999;z-index:10;">✕</div>
+        <h3>🎉 购买成功！</h3>
             <p>您的专属访问令牌：</p>
             <div class="token-display" id="newToken"></div>
             <p style="color:#d32f2f; font-size:12px;">⚠️ 请立即复制保存，关闭后无法再次查看</p>
